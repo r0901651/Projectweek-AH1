@@ -5,50 +5,62 @@ import time
 import wiringpi
 import spidev
 from ch7_ClassLCD import LCD
+import Adafruit_Nokia_LCD as LCD
+import Adafruit_GPIO.SPI as SPI
+
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
 
 reader = SimpleMFRC522()
-def ActivateLCD():
-    wiringpi.digitalWrite(pin_CS_lcd, 0)       # Actived LCD using CS
-    time.sleep(0.000005)
 
-def DeactivateLCD():
-    wiringpi.digitalWrite(pin_CS_lcd, 1)       # Deactived LCD using CS
-    time.sleep(0.000005)
+# Raspberry Pi hardware SPI config:
+DC = 23
+RST = 24
+SPI_PORT = 0
+SPI_DEVICE = 0
 
-PIN_OUT     =   {  
-                'SCLK'  :   14,
-                'DIN'   :   11,
-                'DC'    :   9, 
-                'CS'    :   13, #We will not connect this pin! --> we use w13
-                'RST'   :   10,
-                'LED'   :   6, #backlight   
-}
 
-#IN THIS CODE WE USE W13 (PIN 22) AS CHIP SELECT
-pin_CS_lcd = 13
-wiringpi.wiringPiSetup() 
-wiringpi.wiringPiSPISetupMode(1, 0, 400000, 0)  #(channel, port, speed, mode)
-wiringpi.pinMode(pin_CS_lcd , 1)                # Set pin to mode 1 ( OUTPUT )
-ActivateLCD()
-lcd_1 = LCD(PIN_OUT)
+# Hardware SPI usage:
+disp = LCD.PCD8544(DC, RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=4000000))
+
+# Software SPI usage (defaults to bit-bang SPI interface):
+#disp = LCD.PCD8544(DC, RST, SCLK, DIN, CS)
+
+# Initialize library.
+disp.begin(contrast=60)
+
+# Clear display.
+disp.clear()
+disp.display()
+
+# Create blank image for drawing.
+# Make sure to create image with mode '1' for 1-bit color.
+image = Image.new('1', (LCD.LCDWIDTH, LCD.LCDHEIGHT))
+
+# Get drawing object to draw on image.
+draw = ImageDraw.Draw(image)
+
+# Load default font.
+font = ImageFont.load_default()
+
+# Write some text.
+draw.text((8,30), 'Hello World!', font=font)
 
 try:
-    lcd_1.clear()
-    lcd_1.set_backlight(1)
+    # Clear display.
+    disp.clear()
+    disp.display()
     while True:
-        ActivateLCD()
-        lcd_1.clear()
-        lcd_1.go_to_xy(0, 0)
-        lcd_1.put_string('Hold a tag near the reader')
-        lcd_1.refresh()
+        disp.clear()
+        draw.text((8,30), 'Hold card against reader', font=font)
         print("Hold a tag near the reader")
         id, _ = reader.read()
         print("ID: %s" % (id))
-        lcd_1.clear()
-        lcd_1.go_to_xy(0, 0)
-        lcd_1.put_string('id:\n'+ id + '\ningecheckt: \ndone \n'+time.strftime("%H:%M:%S"))
-        lcd_1.refresh()
-        DeactivateLCD()
+        disp.clear()
+        disp.display()
+        draw.text((8,30), 'id: '+str(id), font=font)
         sleep(5)
 except KeyboardInterrupt:
     GPIO.cleanup()
