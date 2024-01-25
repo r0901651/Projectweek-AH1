@@ -15,17 +15,32 @@ class Student(StudentBase):
     id: int
 
 
-class InformatieBase(BaseModel):
+class IncheckBase(BaseModel):
     incheck: datetime = None
+    student_id: int
+
+
+class IncheckCreate(IncheckBase):
+    pass
+
+
+class Incheck(IncheckBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class UitcheckBase(BaseModel):
     uitcheck: datetime = None
     student_id: int
 
 
-class InformatieCreate(InformatieBase):
+class UitcheckCreate(UitcheckBase):
     pass
 
 
-class Informatie(InformatieBase):
+class Uitcheck(UitcheckBase):
     id: int
 
     class Config:
