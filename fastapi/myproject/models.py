@@ -16,9 +16,7 @@ class Student(Base):
 class Informatie(Base):
     __tablename__ = "informatie"
     id = Column(Integer, primary_key=True, index=True)
-    start = Column(DateTime)
     incheck = Column(DateTime)
-    minimale_tijd = Column(DateTime)
     uitcheck = Column(DateTime)
     student_id = Column(Integer, ForeignKey("students.id"))
 
