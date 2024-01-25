@@ -9,7 +9,7 @@ class Student(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True, index=True)
     uid = Column(Integer)
-    naam = Column(String)
+    naam = Column(String(50))
 
     inchecks = relationship("Incheck", back_populates="students")
     uitchecks = relationship("Uitcheck", back_populates="students")
