@@ -30,14 +30,6 @@ def read_student(uid: int, db: Session = Depends(get_db)):
     return student
 
 
-@app.get("/informatie/{student_id}", response_model=schemas.Informatie)
-def read_informatie(student_id: int, db: Session = Depends(get_db)):
-    informatie = crud.get_informatie(db, student_id=student_id)
-    if informatie is None:
-        raise HTTPException(status_code=404, detail="Informatie not found")
-    return informatie
-
-
 @app.post("/student/")
 def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)):
     new_student = crud.get_student(db, uid=student.uid)
@@ -46,18 +38,33 @@ def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)
     return crud.create_student(db=db, student=student)
 
 
-@app.post("/informatie/")
-def create_informatie(informatie: schemas.InformatieCreate, db: Session = Depends(get_db)):
-    incheck = crud.get_incheck(db, incheck=informatie.incheck)
-    if incheck is not None:
+@app.get("/incheck/{student_id}", response_model=schemas.Incheck)
+def read_incheck(student_id: int, db: Session = Depends(get_db)):
+    incheck = crud.get_incheck(db, student_id=student_id)
+    if incheck is None:
+        raise HTTPException(status_code=404, detail="Incheck not found")
+    return incheck
+
+
+@app.post("/incheck/")
+def create_incheck(incheck: schemas.IncheckCreate, db: Session = Depends(get_db)):
+    new_incheck = crud.get_incheck_by_time(db, incheck=incheck.incheck)
+    if new_incheck is not None:
         raise HTTPException(status_code=400, detail="Incheck already placed")
-    return crud.create_incheck(db=db, informatie=informatie)
+    return crud.create_incheck(db=db, incheck=incheck)
 
 
-@app.patch("/informatie/{student_id}")
-def update_informatie(student_id: int, informatie: schemas.InformatieCreate, db: Session = Depends(get_db)):
-    db_informatie = crud.get_informatie(db, student_id=student_id)
-    if db_informatie is None:
-        raise HTTPException(status_code=404, detail="Informatie not found")
-    return crud.update_informatie(db=db, informatie=informatie)
+@app.get("/uitcheck/{student_id}", response_model=schemas.Uitcheck)
+def read_uitcheck(student_id: int, db: Session = Depends(get_db)):
+    uitcheck = crud.get_uitcheck(db, student_id=student_id)
+    if uitcheck is None:
+        raise HTTPException(status_code=404, detail="Uitcheck not found")
+    return uitcheck
 
+
+@app.post("/uitcheck/")
+def create_uitcheck(uitcheck: schemas.UitcheckCreate, db: Session = Depends(get_db)):
+    new_uitcheck = crud.get_uitcheck_by_time(db, uitcheck=uitcheck.uitcheck)
+    if new_uitcheck is not None:
+        raise HTTPException(status_code=400, detail="Uitcheck already placed")
+    return crud.create_uitcheck(db=db, uitcheck=uitcheck)
