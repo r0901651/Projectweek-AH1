@@ -5,7 +5,7 @@ import time
 import wiringpi
 import spidev
 from ch7_ClassLCD import LCD
-import Adafruit_Nokia_LCD as LCD
+import  Adafruit_CircuitPython_PCD8544 as LCD
 import Adafruit_GPIO.SPI as SPI
 
 from PIL import Image

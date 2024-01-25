@@ -1,2 +1,6 @@
 MFRC522==0.0.7
-mfrc522==0.0.7
+spidev
+smbus2
+rpi.gpio
+adafruit-circuitpython-pcd8544
+RPi.GPIO
