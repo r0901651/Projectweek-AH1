@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   examen-api-service:
-    image: mjimsas/
+    image: mjimsas/examens-fastapi:0.1
     ports:
       - "8000:8000"
     depends_on:
