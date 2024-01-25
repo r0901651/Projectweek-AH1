@@ -16,10 +16,9 @@ class Student(StudentBase):
 
 
 class InformatieBase(BaseModel):
-    start: time = time(14, 30)
-    incheck: time = None
-    minimale_tijd: time = None
-    uitcheck: time = None
+    incheck: datetime = None
+    uitcheck: datetime = None
+    student_id: int
 
 
 class InformatieCreate(InformatieBase):
