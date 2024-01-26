@@ -15,7 +15,7 @@ def  capture_and_recognize():
     print("Image captured!")
 
     # Send the captured image to DeepStack for face recognition
-    with open('captured_image.jpg', 'rb') as image_file:
+    with open('./captured_image.jpg', 'rb') as image_file:
     files = {"image": image_file}
     headers = {"api-key": api_key} if api_key else {}
     response = requests.post(deepstack_url, files=files, headers=headers).json()
