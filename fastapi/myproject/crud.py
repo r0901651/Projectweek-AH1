@@ -9,22 +9,6 @@ def get_student(db: Session, uid: int):
     return db.query(models.Student).filter(models.Student.uid == uid).first()
 
 
-def get_incheck(db: Session, incheck: datetime):
-    return db.query(models.Informatie).filter(models.Informatie.incheck == incheck).first()
-
-
-def get_informatie(db: Session, student_id: int):
-    return db.query(models.Informatie).filter(models.Informatie.student_id == student_id).first()
-
-
-def create_incheck(db: Session, informatie: schemas.InformatieCreate):
-    db_informatie = models.Informatie(**informatie.dict())
-    db.add(db_informatie)
-    db.commit()
-    db.refresh(db_informatie)
-    return "Informatie successfully created!"
-
-
 def create_student(db: Session, student: schemas.StudentCreate):
     db_student = models.Student(**student.dict())
     db.add(db_student)
@@ -33,9 +17,33 @@ def create_student(db: Session, student: schemas.StudentCreate):
     return "Student successfully created!"
 
 
-def update_informatie(db: Session, informatie: schemas.InformatieCreate):
-    db_informatie = db.query(models.Informatie).filter(models.Informatie.uitcheck == informatie.uitcheck).first()
-    db_informatie.incheck = informatie.incheck
+def get_incheck_by_time(db: Session, incheck: datetime):
+    return db.query(models.Incheck).filter(models.Incheck.incheck == incheck).first()
+
+
+def get_incheck(db: Session, student_id: int):
+    return db.query(models.Incheck).filter(models.Incheck.student_id == student_id).first()
+
+
+def create_incheck(db: Session, incheck: schemas.IncheckCreate):
+    db_incheck = models.Incheck(**incheck.dict())
+    db.add(db_incheck)
     db.commit()
-    db.refresh(db_informatie)
-    return "Informatie successfully updated!"
+    db.refresh(db_incheck)
+    return "Incheck successfully created!"
+
+
+def get_uitcheck_by_time(db: Session, uitcheck: datetime):
+    return db.query(models.Uitcheck).filter(models.Uitcheck.uitcheck == uitcheck).first()
+
+
+def get_uitcheck(db: Session, student_id: int):
+    return db.query(models.Uitcheck).filter(models.Incheck.student_id == student_id).first()
+
+
+def create_uitcheck(db: Session, uitcheck: schemas.UitcheckCreate):
+    db_uitcheck = models.Uitcheck(**uitcheck.dict())
+    db.add(db_uitcheck)
+    db.commit()
+    db.refresh(db_uitcheck)
+    return "Uitcheck successfully created!"

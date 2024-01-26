@@ -112,3 +112,4 @@ except KeyboardInterrupt:
     lcd_1.set_backlight(0)
     DeactivateLCD()
     print("\nProgram terminated")
+
