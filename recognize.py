@@ -24,7 +24,9 @@ def  capture_and_recognize():
     if response.get("success", False) and response.get("predictions"):
         # Assume only one face is detected
         detected_person = response["predictions"][0]["userid"]
+        naam = detected_person
         print(f"Detected Person: {detected_person}")
+        return(naam)
     else:
         print("No faces detected in the image.")
 
