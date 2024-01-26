@@ -10,7 +10,7 @@ api_key = ""  # Replace with your DeepStack API key or leave it as an empty stri
 # Capture video from the default camera (camera index 0)
 cam = cv2.VideoCapture(0)
 
-def  capture_and_recognize:
+def  capture_and_recognize():
     ret, image = cam.read()
     cv2.imshow('Capture', image)
 
