@@ -14,6 +14,9 @@ class StudentCreate(StudentBase):
 class Student(StudentBase):
     id: int
 
+    class Config:
+        orm_mode = True
+
 
 class IncheckBase(BaseModel):
     incheck: datetime = None
