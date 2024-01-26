@@ -16,17 +16,17 @@ def  capture_and_recognize():
 
     # Send the captured image to DeepStack for face recognition
     with open('./captured_image.jpg', 'rb') as image_file:
-    files = {"image": image_file}
-    headers = {"api-key": api_key} if api_key else {}
-    response = requests.post(deepstack_url, files=files, headers=headers).json()
+        files = {"image": image_file}
+        headers = {"api-key": api_key} if api_key else {}
+        response = requests.post(deepstack_url, files=files, headers=headers).json()
 
     # Check if faces are detected in the response
     if response.get("success", False) and response.get("predictions"):
-    # Assume only one face is detected
-    detected_person = response["predictions"][0]["userid"]
-    return(f"Detected Person: {detected_person}")
+        # Assume only one face is detected
+        detected_person = response["predictions"][0]["userid"]
+        return(f"Detected Person: {detected_person}")
     else:
-    return("No faces detected in the image.")
+        return("No faces detected in the image.")
 
     # Release the camera and close all OpenCV windows
     cam.release()
