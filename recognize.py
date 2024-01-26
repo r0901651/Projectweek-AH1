@@ -1,24 +1,15 @@
 import cv2
 import requests
 
-# DeepStack server URL for face recognition
-deepstack_url = "https://ai.nas64.be/v1/vision/face/recognize"
-
-# API key for DeepStack (if applicable)
-api_key = ""  # Replace with your DeepStack API key or leave it as an empty string if not needed
-
-# Capture video from the default camera (camera index 0)
-cam = cv2.VideoCapture(0)
-
 def  capture_and_recognize():
+    # DeepStack server URL for face recognition
+    deepstack_url = "https://ai.nas64.be/v1/vision/face/recognize"
+    # API key for DeepStack (if applicable)
+    api_key = ""  # Replace with your DeepStack API key or leave it as an empty string if not needed
+    # Capture video from the default camera (camera index 0)
+    cam = cv2.VideoCapture(0)
     ret, image = cam.read()
     cv2.imshow('Capture', image)
-
-    # Wait for a key press (delay of 1 millisecond)
-    key = cv2.waitKey(1)
-
-    # Check if the 's' key is pressed (ASCII code for 's' is 115)
-
     # Save the captured image
     cv2.imwrite('captured_image.jpg', image)
     print("Image captured!")
