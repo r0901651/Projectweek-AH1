@@ -14,9 +14,12 @@ class StudentCreate(StudentBase):
 class Student(StudentBase):
     id: int
 
+    class Config:
+        orm_mode = True
+
 
 class IncheckBase(BaseModel):
-    incheck: datetime = None
+    incheck: str
     student_id: int
 
 
@@ -32,7 +35,7 @@ class Incheck(IncheckBase):
 
 
 class UitcheckBase(BaseModel):
-    uitcheck: datetime = None
+    uitcheck: str
     student_id: int
 
 
