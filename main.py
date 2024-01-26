@@ -64,6 +64,10 @@ try:
         minimal = time(13, 0)
         naam = recognize.capture_and_recognize()
         if student_naam == naam:
+            lcd_1.clear()
+            lcd_1.go_to_xy(0, 0)
+            lcd_1.put_string('Facia\nrecognition\nCompleted' + naam) #display the text
+            lcd_1.refresh()
             if start > huidige_tijd:
                 lcd_1.clear()
                 lcd_1.go_to_xy(0, 0)
