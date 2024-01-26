@@ -2,6 +2,11 @@ import time
 import wiringpi
 import spidev
 from ch7_ClassLCD import LCD
+from mfrc522 import SimpleMFRC522
+reader = SimpleMFRC522()
+
+startijd = time(14, 0)
+minimal = time(14, 30)
 
 
 def ActivateLCD():
@@ -24,32 +29,31 @@ PIN_OUT     =   {
 #IN THIS CODE WE USE W13 (PIN 22) AS CHIP SELECT
 pin_CS_lcd = 18
 wiringpi.wiringPiSetup() 
-wiringpi.wiringPiSPISetupMode(1, 0, 400000, 0)  #(channel, port, speed, mode)
+wiringpi.wiringPiSPISetupMode(1, 0, 400000)  #(channel, port, speed, mode)
 wiringpi.pinMode(pin_CS_lcd , 1)                # Set pin to mode 1 ( OUTPUT )
 ActivateLCD()
 lcd_1 = LCD(PIN_OUT)
-pin_CS_adc = 16
-pinl1=1
-pinl2=2
-wiringpi.pinMode (pin_CS_adc, 1)
-wiringpi.pinMode (pinl1, 1)
-wiringpi.pinMode (pinl2, 1)
-wiringpi.wiringPiSPISetupMode (1,0,500000,0)
-i=0
+wiringpi.wiringPiSPISetupMode (1,0,500000)
 
 try:
     lcd_1.clear()
     lcd_1.set_backlight(1)
     while True:
-        i+=1
         ActivateLCD()
-        print (" test : " , i)
         lcd_1.clear()
         lcd_1.go_to_xy(0, 0)
-        lcd_1.put_string('test value \non display \nnumb = ' + str(i)) #display the text
+        lcd_1.put_string('Hold a tag near the reader')
+        DeactivateLCD()
+        print("Hold a tag near the reader")
+        id, _ = reader.read()
+        print("ID: %s" % (id))
+        ActivateLCD()
+        lcd_1.clear()
+        lcd_1.go_to_xy(0, 0)
+        lcd_1.put_string('Thanks for checking in \nid display \nid = ' + str(id)) #display the text
         lcd_1.refresh()
         DeactivateLCD()
-        time.sleep(1)
+        time.sleep(3)
 
 except KeyboardInterrupt:
     lcd_1.clear()
@@ -59,4 +63,3 @@ except KeyboardInterrupt:
     print("\nProgram terminated")
 
 # End of Program
-#pinout
