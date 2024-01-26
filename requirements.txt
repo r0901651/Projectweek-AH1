@@ -4,3 +4,4 @@ smbus2
 rpi.gpio
 adafruit-circuitpython-pcd8544
 RPi.GPIO
+pillow
