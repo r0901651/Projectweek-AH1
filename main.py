@@ -8,6 +8,7 @@ import wiringpi
 import spidev
 from ch7_ClassLCD import LCD
 import recognize
+import os
 
 reader = SimpleMFRC522()
 print("reading")
@@ -111,6 +112,7 @@ try:
             lcd_1.go_to_xy(0, 0)
             lcd_1.put_string("You aren't the owner of the card!" )
             lcd_1.refresh()
+        os.remove("demofile.txt") 
         sleep(5)
 
 except KeyboardInterrupt:
