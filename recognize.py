@@ -24,9 +24,9 @@ def  capture_and_recognize():
     if response.get("success", False) and response.get("predictions"):
         # Assume only one face is detected
         detected_person = response["predictions"][0]["userid"]
-        return(f"Detected Person: {detected_person}")
+        print(f"Detected Person: {detected_person}")
     else:
-        return("No faces detected in the image.")
+        print("No faces detected in the image.")
 
     # Release the camera and close all OpenCV windows
     cam.release()
