@@ -17,7 +17,7 @@ class Student(Base):
 class Incheck(Base):
     __tablename__ = "inchecks"
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
-    incheck = Column(DateTime)
+    incheck = Column(String)
     student_id = Column(Integer, ForeignKey("students.id"))
 
     students = relationship("Student", back_populates="inchecks")
@@ -26,7 +26,7 @@ class Incheck(Base):
 class Uitcheck(Base):
     __tablename__ = "uitchecks"
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
-    uitcheck = Column(DateTime)
+    uitcheck = Column(String)
     student_id = Column(Integer, ForeignKey("students.id"))
 
     students = relationship("Student", back_populates="uitchecks")
