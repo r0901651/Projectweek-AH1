@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, status, Query
 import crud
 import models
 import schemas
+from typing import List
 from database import SessionLocal, engine
 import os
 
@@ -28,6 +29,12 @@ def read_student(uid: int, db: Session = Depends(get_db)):
     if student is None:
         raise HTTPException(status_code=404, detail="Student not found")
     return student
+
+
+@app.get("/student/", response_model=List[schemas.Student])
+def read_students(skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
+    students = crud.get_students(db, skip=skip, limit=limit)
+    return students
 
 
 @app.post("/student/")
@@ -68,11 +75,3 @@ def create_uitcheck(uitcheck: schemas.UitcheckCreate, db: Session = Depends(get_
     if new_uitcheck is not None:
         raise HTTPException(status_code=400, detail="Uitcheck already placed")
     return crud.create_uitcheck(db=db, uitcheck=uitcheck)
-
-
-@app.get("/examen/{id}", response_model=schemas.Examen)
-def read_examen(examen_id: int, db: Session = Depends(get_db)):
-    examen = crud.get_examen(db, examen_id=examen_id)
-    if examen is None:
-        raise HTTPException(status_code=404, detail="Examen not found")
-    return examen
