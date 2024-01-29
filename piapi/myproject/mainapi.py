@@ -1,4 +1,3 @@
-# app.py
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import subprocess
@@ -14,7 +13,7 @@ def start_main_script():
     except Exception as e:
         print(f"Error starting main script: {str(e)}")
 
-@app.post("/set_id")
+@app.post("/setid")
 async def set_id(payload: IDPayload):
     try:
         script_id = payload.id
