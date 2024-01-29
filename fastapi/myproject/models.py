@@ -14,16 +14,21 @@ class Student(Base):
 
     inchecks = relationship("Incheck", back_populates="students")
     uitchecks = relationship("Uitcheck", back_populates="students")
+    inschrijvingen = relationship("Inschrijving", back_populates="students")
 
 
 class Examen(Base):
     __tablename__ = "examens"
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
     naam = Column(String)
+    startuur = Column(String)
+    einduur = Column(String)
 
     inchecks = relationship("Incheck", back_populates="examens")
     uitchecks = relationship("Uitcheck", back_populates="examens")
     manuals = relationship("Manual", back_populates="examens")
+    inschrijvingen = relationship("Inschrijving", back_populates="examens")
+
 
 
 class Incheck(Base):

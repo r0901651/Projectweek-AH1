@@ -57,7 +57,7 @@ def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)
 
 @app.get("/examen/{id}", response_model=schemas.Examen)
 def read_examen(id: int, db: Session = Depends(get_db)):
-    examen = crud.get_examen(db, id=id)
+    examen = crud.get_examen_by_id(db, id=id)
     if examen is None:
         raise HTTPException(status_code=404, detail="Student not found")
     return examen
@@ -71,7 +71,7 @@ def read_examens(skip: int = Query(0, description="Number of items to skip"), li
 
 @app.post("/examen/")
 def create_examen(examen: schemas.ExamenCreate, db: Session = Depends(get_db)):
-    new_examen = crud.get_examen(db, naam=examen.naam)
+    new_examen = crud.get_examen_by_name(db, naam=examen.naam)
     if new_examen is not None:
         raise HTTPException(status_code=400, detail="Examen already exists")
     return crud.create_examen(db=db, examen=examen)
@@ -118,7 +118,7 @@ def read_manual(naam: str, db: Session = Depends(get_db)):
 
 
 @app.post("/manual/")
-def create_manual(manual: schemas.UitcheckCreate, db: Session = Depends(get_db)):
+def create_manual(manual: schemas.ManualCreate, db: Session = Depends(get_db)):
     new_manual = crud.get_manual(db, naam=manual.naam)
     if new_manual is not None:
         raise HTTPException(status_code=400, detail="Student already placed")
@@ -156,9 +156,10 @@ def read_inschrijvingen(skip: int = Query(0, description="Number of items to ski
         raise HTTPException(status_code=404, detail="Inschrijving not found")
     return inschrijvingen
 
+
 @app.post("/inschrijving/")
 def create_inschrijving(inschrijving: schemas.InschrijvingCreate, db: Session = Depends(get_db)):
-    new_inschrijving = crud.get_inschrijving_by_student_id(db, student_id=inschrijving.student_id)
+    new_inschrijving = crud.get_inschrijving(db, student_id=inschrijving.student_id, examen_id=inschrijving.examen_id)
     if new_inschrijving is not None:
         raise HTTPException(status_code=400, detail="Inschrijving already placed")
     return crud.create_inschrijving(db=db, inschrijving=inschrijving)

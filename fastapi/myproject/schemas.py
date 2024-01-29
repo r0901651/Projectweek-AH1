@@ -20,6 +20,8 @@ class Student(StudentBase):
 
 class ExamenBase(BaseModel):
     naam: str
+    startuur: str
+    einduur: str
 
 
 class ExamenCreate(ExamenBase):

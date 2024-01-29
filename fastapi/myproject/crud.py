@@ -19,7 +19,10 @@ def create_student(db: Session, student: schemas.StudentCreate):
     return "Student successfully created!"
 
 
-def get_examen(db: Session, naam: str):
+def get_examen_by_id(db: Session, id: int):
+    return db.query(models.Examen).filter(models.Examen.id == id).first()
+
+def get_examen_by_name(db: Session, naam: str):
     return db.query(models.Examen).filter(models.Examen.naam == naam).first()
 
 def get_examens(db: Session, skip: int = 0, limit: int = 10):
@@ -89,6 +92,9 @@ def get_inschrijving_by_exam_id(db: Session, examen_id: int, skip: int = 0, limi
 
 def get_inschrijvingen(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Inschrijving).offset(skip).limit(limit).all()
+
+def get_inschrijving(db: Session, student_id: int, examen_id: int):
+    return db.query(models.Inschrijving).filter(models.Inschrijving.student_id == student_id and models.Inschrijving.examen_id == examen_id).first()
 
 def create_inschrijving(db: Session, inschrijving: schemas.InschrijvingCreate):
     db_inschrijving = models.Inschrijving(**inschrijving.dict())
