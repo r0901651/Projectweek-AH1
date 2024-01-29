@@ -56,3 +56,13 @@ class Manual(Base):
     examen_id = Column(Integer, ForeignKey("examens.id"))
 
     examens = relationship("Examen", back_populates="manuals")
+
+
+class Inschrijving(Base):
+    __tablename__ = "inschrijvingen"
+    id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
+    student_id = Column(Integer, ForeignKey("students.id"))
+    examen_id = Column(Integer, ForeignKey("examens.id"))
+
+    students = relationship("Student", back_populates="inschrijvingen")
+    examens = relationship("Examen", back_populates="inschrijvingen")
