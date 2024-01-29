@@ -71,7 +71,7 @@ def read_examens(skip: int = Query(0, description="Number of items to skip"), li
 
 @app.post("/examen/")
 def create_examen(examen: schemas.ExamenCreate, db: Session = Depends(get_db)):
-    new_examen = crud.create_examen(db, examen=examen)
+    new_examen = crud.get_examen(db, naam=examen.naam)
     if new_examen is not None:
         raise HTTPException(status_code=400, detail="Examen already exists")
     return crud.create_examen(db=db, examen=examen)
