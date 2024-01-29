@@ -41,7 +41,7 @@ def read_student(uid: int, db: Session = Depends(get_db)):
     return student
 
 
-@app.get("/student/{id}", response_model=schemas.Student)
+@app.get("/students/{id}", response_model=schemas.Student)
 def read_student_by_id(id: int, db: Session = Depends(get_db)):
     student = crud.get_student_by_id(db, id=id)
     if student is None:
