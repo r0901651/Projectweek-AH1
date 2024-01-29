@@ -53,5 +53,5 @@ class Manual(Base):
     naam = Column(String)
     r_nummer = Column(String)
     examen_id = Column(Integer, ForeignKey("examens.id"))
-    
+
     examens = relationship("Examen", back_populates="manuals")

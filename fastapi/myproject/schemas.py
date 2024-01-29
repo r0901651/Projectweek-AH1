@@ -65,3 +65,19 @@ class Uitcheck(UitcheckBase):
 
     class Config:
         orm_mode = True
+
+
+class ManualBase(BaseModel):
+    naam: str
+    r_nummer: str
+
+
+class ManualCreate(ManualBase):
+    pass
+
+
+class Manual(ManualBase):
+    id: int
+
+    class Config:
+        orm_mode = True

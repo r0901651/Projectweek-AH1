@@ -107,3 +107,27 @@ def create_uitcheck(uitcheck: schemas.UitcheckCreate, db: Session = Depends(get_
     if new_uitcheck is not None:
         raise HTTPException(status_code=400, detail="Uitcheck already placed")
     return crud.create_uitcheck(db=db, uitcheck=uitcheck)
+
+
+@app.get("/manual/{naam}", response_model=schemas.Manual)
+def read_manual(naam: str, db: Session = Depends(get_db)):
+    manual = crud.get_manual(db, naam=naam)
+    if manual is None:
+        raise HTTPException(status_code=404, detail="Student not found")
+    return manual
+
+
+@app.post("/manual/")
+def create_manual(manual: schemas.UitcheckCreate, db: Session = Depends(get_db)):
+    new_manual = crud.get_manual(db, naam=manual.naam)
+    if new_manual is not None:
+        raise HTTPException(status_code=400, detail="Student already placed")
+    return crud.create_manual(db=db, manual=manual)
+
+
+@app.delete("/manual/{naam}")
+def delete_manual(naam: str, db: Session = Depends(get_db)):
+    manual = crud.get_manual(db, naam=naam)
+    if not manual:
+        raise HTTPException(status_code=404, detail="Student not found")
+    return crud.delete_manual(db=db, manual=manual)
