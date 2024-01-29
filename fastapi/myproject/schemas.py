@@ -5,7 +5,7 @@ from datetime import time, datetime, timedelta
 class StudentBase(BaseModel):
     uid: int
     naam: str
-
+    r_nummer: str
 
 class StudentCreate(StudentBase):
     pass
