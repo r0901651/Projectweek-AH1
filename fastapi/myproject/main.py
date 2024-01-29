@@ -118,7 +118,7 @@ def read_manual(naam: str, db: Session = Depends(get_db)):
 
 
 @app.post("/manual/")
-def create_manual(manual: schemas.UitcheckCreate, db: Session = Depends(get_db)):
+def create_manual(manual: schemas.ManualCreate, db: Session = Depends(get_db)):
     new_manual = crud.get_manual(db, naam=manual.naam)
     if new_manual is not None:
         raise HTTPException(status_code=400, detail="Student already placed")
