@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Depends, FastAPI, HTTPException, status, Query
 import crud
 import models
@@ -14,6 +15,15 @@ if not os.path.exists('.\sqlitedb'):
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
@@ -41,7 +51,7 @@ def read_students(skip: int = Query(0, description="Number of items to skip"), l
 def create_student(student: schemas.StudentCreate, db: Session = Depends(get_db)):
     new_student = crud.get_student(db, uid=student.uid)
     if new_student is not None:
-        raise HTTPException(status_code=400, detail="Student already excists")
+        raise HTTPException(status_code=400, detail="Student already exists")
     return crud.create_student(db=db, student=student)
 
 
