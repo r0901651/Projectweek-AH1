@@ -131,3 +131,34 @@ def delete_manual(naam: str, db: Session = Depends(get_db)):
     if not manual:
         raise HTTPException(status_code=404, detail="Student not found")
     return crud.delete_manual(db=db, manual=manual)
+
+
+@app.get("/inschrijving/{student_id}", response_model=List[schemas.Inschrijving])
+def read_inschrijving_by_student_id(student_id: int, skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
+    inschrijving = crud.get_inschrijving_by_student_id(db, student_id=student_id, skip=skip, limit=limit)
+    if inschrijving is None:
+        raise HTTPException(status_code=404, detail="Inschrijving not found")
+    return inschrijving
+
+
+@app.get("/inschrijving/{examen_id}", response_model=List[schemas.Inschrijving])
+def read_inschrijving_by_exam_id(examen_id: int, skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
+    inschrijving = crud.get_inschrijving_by_exam_id(db, examen_id=examen_id, skip=skip, limit=limit)
+    if inschrijving is None:
+        raise HTTPException(status_code=404, detail="Inschrijving not found")
+    return inschrijving
+
+
+@app.get("/inschrijving/", response_model=List[schemas.Inschrijving])
+def read_inschrijvingen(skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
+    inschrijvingen = crud.get_inschrijvingen(db, skip=skip, limit=limit)
+    if inschrijvingen is None:
+        raise HTTPException(status_code=404, detail="Inschrijving not found")
+    return inschrijvingen
+
+@app.post("/inschrijving/")
+def create_inschrijving(inschrijving: schemas.InschrijvingCreate, db: Session = Depends(get_db)):
+    new_inschrijving = crud.get_inschrijving_by_student_id(db, student_id=inschrijving.student_id)
+    if new_inschrijving is not None:
+        raise HTTPException(status_code=400, detail="Inschrijving already placed")
+    return crud.create_inschrijving(db=db, inschrijving=inschrijving)

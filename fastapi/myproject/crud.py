@@ -79,3 +79,20 @@ def delete_manual(db: Session, manual: schemas.Manual):
     db.delete(manual)
     db.commit()
     return "Student successfully deleted!"
+
+
+def get_inschrijving_by_student_id(db: Session, student_id: int, skip: int = 0, limit: int = 10):
+    return db.query(models.Inschrijving).filter(models.Inschrijving.student_id == student_id).offset(skip).limit(limit).all()
+
+def get_inschrijving_by_exam_id(db: Session, examen_id: int, skip: int = 0, limit: int = 10):
+    return db.query(models.Inschrijving).filter(models.Inschrijving.examen_id == examen_id).offset(skip).limit(limit).all()
+
+def get_inschrijvingen(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Inschrijving).offset(skip).limit(limit).all()
+
+def create_inschrijving(db: Session, inschrijving: schemas.InschrijvingCreate):
+    db_inschrijving = models.Inschrijving(**inschrijving.dict())
+    db.add(db_inschrijving)
+    db.commit()
+    db.refresh(db_inschrijving)
+    return "Inschrijving successfully created!"

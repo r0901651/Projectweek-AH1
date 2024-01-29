@@ -81,3 +81,17 @@ class Manual(ManualBase):
 
     class Config:
         orm_mode = True
+
+
+class InschrijvingBase(BaseModel):
+    student_id: int
+    examen_id: int
+
+class InschrijvingCreate(InschrijvingBase):
+    pass
+
+class Inschrijving(InschrijvingBase):
+    id: int
+
+    class Config:
+        orm_mode = True
