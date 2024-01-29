@@ -41,6 +41,14 @@ def read_student(uid: int, db: Session = Depends(get_db)):
     return student
 
 
+@app.get("/student/{id}", response_model=schemas.Student)
+def read_student_by_id(id: int, db: Session = Depends(get_db)):
+    student = crud.get_student_by_id(db, id=id)
+    if student is None:
+        raise HTTPException(status_code=404, detail="Student not found")
+    return student
+
+
 @app.get("/student/", response_model=List[schemas.Student])
 def read_students(skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
     students = crud.get_students(db, skip=skip, limit=limit)
