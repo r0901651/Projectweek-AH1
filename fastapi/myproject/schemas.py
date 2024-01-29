@@ -18,6 +18,21 @@ class Student(StudentBase):
         orm_mode = True
 
 
+class ExamenBase(BaseModel):
+    naam: str
+
+
+class ExamenCreate(ExamenBase):
+    pass
+
+
+class Examen(ExamenBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 class IncheckBase(BaseModel):
     incheck: str
     student_id: int
