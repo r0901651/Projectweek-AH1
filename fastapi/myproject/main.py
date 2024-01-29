@@ -157,6 +157,14 @@ def read_inschrijvingen(skip: int = Query(0, description="Number of items to ski
     return inschrijvingen
 
 
+@app.get("/inschrijving/{student_id}/{examen_id}", response_model=schemas.Inschrijving)
+def read_inschrijving(student_id: int, examen_id: int, db: Session = Depends(get_db)):
+    inschrijving = crud.get_inschrijving(db, student_id=student_id, examen_id=examen_id)
+    if inschrijving is None:
+        raise HTTPException(status_code=404, detail="Inschrijving not found")
+    return inschrijving
+
+
 @app.post("/inschrijving/")
 def create_inschrijving(inschrijving: schemas.InschrijvingCreate, db: Session = Depends(get_db)):
     new_inschrijving = crud.get_inschrijving(db, student_id=inschrijving.student_id, examen_id=inschrijving.examen_id)
