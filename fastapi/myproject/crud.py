@@ -19,7 +19,10 @@ def create_student(db: Session, student: schemas.StudentCreate):
     return "Student successfully created!"
 
 
-def get_examen(db: Session, naam: str):
+def get_examen_by_id(db: Session, id: int):
+    return db.query(models.Examen).filter(models.Examen.id == id).first()
+
+def get_examen_by_name(db: Session, naam: str):
     return db.query(models.Examen).filter(models.Examen.naam == naam).first()
 
 def get_examens(db: Session, skip: int = 0, limit: int = 10):
