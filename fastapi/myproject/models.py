@@ -14,6 +14,7 @@ class Student(Base):
 
     inchecks = relationship("Incheck", back_populates="students")
     uitchecks = relationship("Uitcheck", back_populates="students")
+    inschrijvingen = relationship("Inschrijving", back_populates="students")
 
 
 class Examen(Base):
@@ -26,6 +27,8 @@ class Examen(Base):
     inchecks = relationship("Incheck", back_populates="examens")
     uitchecks = relationship("Uitcheck", back_populates="examens")
     manuals = relationship("Manual", back_populates="examens")
+    inschrijvingen = relationship("Inschrijving", back_populates="examens")
+
 
 
 class Incheck(Base):
