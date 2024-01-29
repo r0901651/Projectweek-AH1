@@ -11,8 +11,8 @@ class Student(Base):
     uid = Column(Integer)
     naam = Column(String(50))
 
-    student_inchecks = relationship("Incheck", back_populates="students")
-    student_uitchecks = relationship("Uitcheck", back_populates="students")
+    inchecks = relationship("Incheck", back_populates="students")
+    uitchecks = relationship("Uitcheck", back_populates="students")
 
 
 class Examen(Base):
@@ -20,8 +20,8 @@ class Examen(Base):
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
     naam = Column(String(50))
 
-    examen_inchecks = relationship("Incheck", back_populates="examens")
-    examen_uitchecks = relationship("Uitcheck", back_populates="examens")
+    inchecks = relationship("Incheck", back_populates="examens")
+    uitchecks = relationship("Uitcheck", back_populates="examens")
 
 
 class Incheck(Base):
@@ -31,8 +31,8 @@ class Incheck(Base):
     student_id = Column(Integer, ForeignKey("students.id"))
     examen_id = Column(Integer, ForeignKey("examens.id"))
 
-    incheck_students = relationship("Student", back_populates="inchecks")
-    inchecks_examens = relationship("Examen", back_populates="inchecks")
+    students = relationship("Student", back_populates="inchecks")
+    examens = relationship("Examen", back_populates="inchecks")
 
 
 class Uitcheck(Base):
@@ -40,6 +40,7 @@ class Uitcheck(Base):
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
     uitcheck = Column(String)
     student_id = Column(Integer, ForeignKey("students.id"))
+    examen_id = Column(Integer, ForeignKey("examens.id"))
 
-    uitcheck_students = relationship("Student", back_populates="uitchecks")
-    uitcheck_examens = relationship("Examen", back_populates="uitchecks")
+    students = relationship("Student", back_populates="uitchecks")
+    examens = relationship("Examen", back_populates="uitchecks")

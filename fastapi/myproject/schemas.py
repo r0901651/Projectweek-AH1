@@ -36,6 +36,7 @@ class Examen(ExamenBase):
 class IncheckBase(BaseModel):
     incheck: str
     student_id: int
+    examen_id: int
 
 
 class IncheckCreate(IncheckBase):
@@ -52,6 +53,7 @@ class Incheck(IncheckBase):
 class UitcheckBase(BaseModel):
     uitcheck: str
     student_id: int
+    examen_id: int
 
 
 class UitcheckCreate(UitcheckBase):
