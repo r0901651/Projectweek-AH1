@@ -10,6 +10,7 @@ class Student(Base):
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
     uid = Column(Integer)
     naam = Column(String)
+    r_nummer = Column(String)
 
     inchecks = relationship("Incheck", back_populates="students")
     uitchecks = relationship("Uitcheck", back_populates="students")
