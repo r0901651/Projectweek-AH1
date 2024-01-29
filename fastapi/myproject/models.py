@@ -44,3 +44,13 @@ class Uitcheck(Base):
 
     students = relationship("Student", back_populates="uitchecks")
     examens = relationship("Examen", back_populates="uitchecks")
+
+
+class Manual(Base):
+    __tablename__ = "manuals"
+    id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
+    naam = Column(String)
+    r_nummer = Column(String)
+    examen_id = relationship("Examen", back_populates="manuals")
+
+    examens = relationship("Examen", back_populates="manuals")

@@ -19,8 +19,8 @@ def create_student(db: Session, student: schemas.StudentCreate):
     return "Student successfully created!"
 
 
-def get_examen(db: Session, id: int):
-    return db.query(models.Examen).filter(models.Examen.id == id).first()
+def get_examen(db: Session, naam: str):
+    return db.query(models.Examen).filter(models.Examen.naam == naam).first()
 
 def get_examens(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Examen).offset(skip).limit(limit).all()
@@ -59,3 +59,23 @@ def create_uitcheck(db: Session, uitcheck: schemas.UitcheckCreate):
     db.commit()
     db.refresh(db_uitcheck)
     return "Uitcheck successfully created!"
+
+
+def get_manual(db: Session, naam: str):
+    return db.query(models.Manual).filter(models.Manual.naam == naam).first()
+
+def get_manuals(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.Manual).offset(skip).limit(limit).all()
+
+def create_manual(db: Session, manual: schemas.ManualCreate):
+    db_manual = models.Manual(**manual.dict())
+    db.add(db_manual)
+    db.commit()
+    db.refresh(db_manual)
+    return "Student successfully created!"
+
+
+def delete_manual(db: Session, manual: schemas.Manual):
+    db.delete(manual)
+    db.commit()
+    return "Student successfully deleted!"
