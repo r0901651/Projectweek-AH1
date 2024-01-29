@@ -9,7 +9,7 @@ class Student(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
     uid = Column(Integer)
-    naam = Column(String(50))
+    naam = Column(String)
 
     inchecks = relationship("Incheck", back_populates="students")
     uitchecks = relationship("Uitcheck", back_populates="students")
@@ -18,10 +18,11 @@ class Student(Base):
 class Examen(Base):
     __tablename__ = "examens"
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
-    naam = Column(String(50))
+    naam = Column(String)
 
     inchecks = relationship("Incheck", back_populates="examens")
     uitchecks = relationship("Uitcheck", back_populates="examens")
+    manuals = relationship("Manual", back_populates="examens")
 
 
 class Incheck(Base):
@@ -51,6 +52,6 @@ class Manual(Base):
     id = Column(Integer, primary_key=True, unique=True, index=True, autoincrement=True, nullable=False)
     naam = Column(String)
     r_nummer = Column(String)
-    examen_id = relationship("Examen", back_populates="manuals")
+    examen_id = Column(Integer, ForeignKey("examens.id"))
 
     examens = relationship("Examen", back_populates="manuals")
