@@ -90,6 +90,9 @@ def get_inschrijving_by_exam_id(db: Session, examen_id: int, skip: int = 0, limi
 def get_inschrijvingen(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Inschrijving).offset(skip).limit(limit).all()
 
+def get_inschrijving(db: Session, student_id: int, examen_id: int):
+    return db.query(models.Inschrijving).filter(models.Inschrijving.student_id == student_id and models.Inschrijving.examen_id == examen_id).first()
+
 def create_inschrijving(db: Session, inschrijving: schemas.InschrijvingCreate):
     db_inschrijving = models.Inschrijving(**inschrijving.dict())
     db.add(db_inschrijving)
