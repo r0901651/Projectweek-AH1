@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Depends, FastAPI, HTTPException, status, Query
 from fastapi.middleware.cors import CORSMiddleware
 import crud
