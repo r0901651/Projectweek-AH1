@@ -41,6 +41,14 @@ def read_student(uid: int, db: Session = Depends(get_db)):
     return student
 
 
+@app.get("/students/{id}", response_model=schemas.Student)
+def read_student_by_id(id: int, db: Session = Depends(get_db)):
+    student = crud.get_student_by_id(db, id=id)
+    if student is None:
+        raise HTTPException(status_code=404, detail="Student not found")
+    return student
+
+
 @app.get("/student/", response_model=List[schemas.Student])
 def read_students(skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
     students = crud.get_students(db, skip=skip, limit=limit)
@@ -141,7 +149,7 @@ def read_inschrijving_by_student_id(student_id: int, skip: int = Query(0, descri
     return inschrijving
 
 
-@app.get("/inschrijving/{examen_id}", response_model=List[schemas.Inschrijving])
+@app.get("/inschrijvingexamen/{examen_id}", response_model=List[schemas.Inschrijving])
 def read_inschrijving_by_exam_id(examen_id: int, skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
     inschrijving = crud.get_inschrijving_by_exam_id(db, examen_id=examen_id, skip=skip, limit=limit)
     if inschrijving is None:
@@ -149,7 +157,7 @@ def read_inschrijving_by_exam_id(examen_id: int, skip: int = Query(0, descriptio
     return inschrijving
 
 
-@app.get("/inschrijving/", response_model=List[schemas.Inschrijving])
+@app.get("/inschrijvingstudent/", response_model=List[schemas.Inschrijving])
 def read_inschrijvingen(skip: int = Query(0, description="Number of items to skip"), limit: int = Query(10, description="Number of items to return"), db: Session = Depends(get_db)):
     inschrijvingen = crud.get_inschrijvingen(db, skip=skip, limit=limit)
     if inschrijvingen is None:

@@ -8,6 +8,9 @@ import schemas
 def get_student(db: Session, uid: int):
     return db.query(models.Student).filter(models.Student.uid == uid).first()
 
+def get_student_by_id(db: Session, id: int):
+    return db.query(models.Student).filter(models.Student.id == id).first()
+
 def get_students(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.Student).offset(skip).limit(limit).all()
 
