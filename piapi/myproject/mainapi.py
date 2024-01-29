@@ -9,7 +9,7 @@ class IDPayload(BaseModel):
 
 def start_main_script():
     try:
-        subprocess.run(["python", "main.py"])  # Adjust this command based on your setup
+        subprocess.run(["python3", "main.py"])
     except Exception as e:
         print(f"Error starting main script: {str(e)}")
 
@@ -21,7 +21,7 @@ async def set_id(payload: IDPayload):
 
         # Write the result to a file
         result = f"Result for ID {script_id}"  # This could be any value you want to return
-        with open("result.txt", "w") as file:
+        with open("examenid.txt", "w") as file:
             file.write(result)
 
         print("Script Result:", result)
