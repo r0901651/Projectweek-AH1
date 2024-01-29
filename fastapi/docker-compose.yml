@@ -1,7 +1,7 @@
 version: "3.9"
 services:
  examens-api-service:
-  image: mjimsas/examens-fastapi:0.1
+  image: mjimsas/examens-fastapi:0.2
   ports:
     - "8000:8000"
   volumes:
