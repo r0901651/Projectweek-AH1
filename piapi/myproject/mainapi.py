@@ -9,7 +9,7 @@ class IDPayload(BaseModel):
 
 def start_main_script():
     try:
-        subprocess.run(["python3", "main.py"])
+        subprocess.run(["python3", "main_zonder_lcd.py"])
     except Exception as e:
         print(f"Error starting main script: {str(e)}")
 
