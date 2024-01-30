@@ -9,7 +9,7 @@ class IDPayload(BaseModel):
 
 def start_main_script():
     try:
-        subprocess.run(["python3", "main_zonder_lcd.py"])
+        subprocess.run(["python3", "main_met_LCD.py"])
     except Exception as e:
         print(f"Error starting main script: {str(e)}")
 
@@ -20,9 +20,9 @@ async def set_id(payload: IDPayload):
         print("Received ID:", script_id)
 
         # Write the result to a file
-        result = f"Result for ID {script_id}"  # This could be any value you want to return
+        result = {script_id}  # This could be any value you want to return
         with open("examenid.txt", "w") as file:
-            file.write(result)
+            file.write(str(result))
 
         print("Script Result:", result)
 
