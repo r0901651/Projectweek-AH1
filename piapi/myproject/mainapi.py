@@ -1,8 +1,17 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import subprocess
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class IDPayload(BaseModel):
     id: int
@@ -20,7 +29,7 @@ async def set_id(payload: IDPayload):
         print("Received ID:", script_id)
 
         # Write the result to a file
-        result = {script_id}  # This could be any value you want to return
+        result = script_id  # This could be any value you want to return
         with open("examenid.txt", "w") as file:
             file.write(str(result))
 
