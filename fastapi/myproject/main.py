@@ -176,7 +176,6 @@ def read_inschrijving(student_id: int, examen_id: int, db: Session = Depends(get
 @app.post("/inschrijving/")
 def create_inschrijving(inschrijving: schemas.InschrijvingCreate, db: Session = Depends(get_db)):
     new_inschrijving = crud.get_inschrijving(db, student_id=inschrijving.student_id, examen_id=inschrijving.examen_id)
-    print(new_inschrijving)
     if new_inschrijving is not None:
         raise HTTPException(status_code=400, detail="Inschrijving already placed")
     return crud.create_inschrijving(db=db, inschrijving=inschrijving)
